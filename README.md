@@ -1,4 +1,4 @@
-# DVBViewer_to_m3u_Converter
+# DVBViewer INI zu M3U Converter
 Dieses kleine Python-Skript dient dazu, die vom DVBViewer erzeugten Senderlisten im .ini-Format in das .m3u-Format zu konvertieren.
 
 Eine kurze Anleitung und weitere Informationen zu den beiden Formaten finden Sie hier:
