@@ -38,7 +38,7 @@ while rightip != True:
 		rightip = False
 print("Die IP " + ip + " ist die richtige IP.")
 
-channelstr = open('Channels.ini','r')
+channelstr = open('Channels.ini','r', encoding='utf-8', errors='ignore')
 channels = channelstr.read()
 m3u = open('satip.m3u', 'w')
 dest = "#EXTM3U\n"
@@ -46,12 +46,13 @@ dest = "#EXTM3U\n"
 i = 0
 #channels = channels[channels.find("[Channel" +str(0)+"]"):len(channels)]
 #print(channels)
+channelNumber = 0
 while channels:
 	name = "#EXTINF:0," + str(i+1) + ". " + channels[channels.find("Name=")+5 : channels.find("\n", channels.find("Name=")+5)] + "\n"
 	dest = dest + name
 	freq = channels[channels.find("Frequency=") + 10 : channels.find("\n", channels.find("Frequency=") + 10)-1]
 	pol = channels[channels.find("Polarity=") + 9 : channels.find("\n", channels.find("Polarity=") + 9)-1]
-	satmod = channels[channels.find("SatModulation=") + 14 : channels.find("\n", channels.find("SatModulation=") + 14)-1]
+	satmod = channels[channels.find("SatModulation=") + 14 : channels.find("\n", channels.find("SatModulation=") + 14)]
 	binarr = dectobin(int(satmod))
 #	Bit 0..1: Modulation (00 = Auto, 01 = QPSK, 10 = 8PSK, 11 = 16QAM)
 #	Bit 2: Modulation system (0 = DVB-S, 1 = DVB-S2)
