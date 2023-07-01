@@ -49,9 +49,10 @@ i = 0
 channelNumber = 0
 while channels:
 	name = "#EXTINF:0," + str(i+1) + ". " + channels[channels.find("Name=")+5 : channels.find("\n", channels.find("Name=")+5)] + "\n"
-	dest = dest + name
-	freq = channels[channels.find("Frequency=") + 10 : channels.find("\n", channels.find("Frequency=") + 10)-1]
-	pol = channels[channels.find("Polarity=") + 9 : channels.find("\n", channels.find("Polarity=") + 9)-1]
+	puffer = "#EXTVLCOPT:network-caching=1000\n"
+	dest = dest + name + puffer
+	freq = channels[channels.find("Frequency=") + 10 : channels.find("\n", channels.find("Frequency=") + 10)]
+	pol = channels[channels.find("Polarity=") + 9 : channels.find("\n", channels.find("Polarity=") + 9)]
 	satmod = channels[channels.find("SatModulation=") + 14 : channels.find("\n", channels.find("SatModulation=") + 14)]
 	binarr = dectobin(int(satmod))
 #	Bit 0..1: Modulation (00 = Auto, 01 = QPSK, 10 = 8PSK, 11 = 16QAM)
@@ -81,9 +82,9 @@ while channels:
 	if binarr[0] == 1:
 		plts = "on"
 
-	sr = channels[channels.find("Symbolrate=") + 11 : channels.find("\n", channels.find("Symbolrate=") + 11)-1]
+	sr = channels[channels.find("Symbolrate=") + 11 : channels.find("\n", channels.find("Symbolrate=") + 11)]
 
-	fec = channels[channels.find("FEC=") + 4 : channels.find("\n", channels.find("FEC=") + 4)-1]
+	fec = channels[channels.find("FEC=") + 4 : channels.find("\n", channels.find("FEC=") + 4)]
 	if fec == "1":
 		fec = "23"
 	elif fec == "2":
@@ -98,10 +99,10 @@ while channels:
 	pat_pid = str(0)
 	sdt_pid = str(17)
 	sit_pid = str(18)
-	vid_pid = channels[channels.find("VPID=") + 5 : channels.find("\n", channels.find("VPID=") + 5)-1]
-	aud_pid = channels[channels.find("APID=") + 5 : channels.find("\n", channels.find("APID=") + 5)-1]
-	pmt_pid = channels[channels.find("PMTPID=") + 7 : channels.find("\n", channels.find("PMTPID=") + 7)-1]
-	txt_pid = channels[channels.find("TelePID=") + 8 : channels.find("\n", channels.find("TelePID=") + 8)-1]
+	vid_pid = channels[channels.find("VPID=") + 5 : channels.find("\n", channels.find("VPID=") + 5)]
+	aud_pid = channels[channels.find("APID=") + 5 : channels.find("\n", channels.find("APID=") + 5)]
+	pmt_pid = channels[channels.find("PMTPID=") + 7 : channels.find("\n", channels.find("PMTPID=") + 7)]
+	txt_pid = channels[channels.find("TelePID=") + 8 : channels.find("\n", channels.find("TelePID=") + 8)]
 
 	url = "rtsp://" + ip + "/?src=1&freq=" + freq + "&pol=" + pol + "&ro=" + ro + "&msys=" + msys + "&mtype=" + mtype + "&plts=" + plts + "&sr=" + sr + "&fec=" + fec + "&pids=" + pat_pid + ","+ sdt_pid + ","+ sit_pid + ","+ vid_pid + ","+ aud_pid + ","+ pmt_pid + "," + txt_pid + "\n"
 	dest = dest + url
